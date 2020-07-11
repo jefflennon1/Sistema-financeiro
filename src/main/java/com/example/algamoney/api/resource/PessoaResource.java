@@ -71,11 +71,7 @@ public class PessoaResource {
 	
 	@RequestMapping("/{codigo}")
 	public ResponseEntity<Pessoa> trazerPeloCodigo(@PathVariable Long codigo){
-		Pessoa pessoaCodigo = pessoaRepository.findOne(codigo);
-		if(pessoaCodigo == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		
+		Pessoa pessoaCodigo = pessoaservice.buscarPeloCodigo(codigo);	
 		return ResponseEntity.ok(pessoaCodigo);
 	}
 	
