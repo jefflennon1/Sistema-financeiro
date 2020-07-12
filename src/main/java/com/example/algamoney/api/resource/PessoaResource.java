@@ -69,6 +69,14 @@ public class PessoaResource {
 	}
 	
 	
+	@PutMapping("/{codigo}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizaAtivo(@PathVariable Long codigo,@RequestBody Boolean ativo) {
+		
+		pessoaservice.atualizaPropriedadeAtivo(codigo, ativo); 
+	}
+	
+	
 	@RequestMapping("/{codigo}")
 	public ResponseEntity<Pessoa> trazerPeloCodigo(@PathVariable Long codigo){
 		Pessoa pessoaCodigo = pessoaservice.buscarPeloCodigo(codigo);	
