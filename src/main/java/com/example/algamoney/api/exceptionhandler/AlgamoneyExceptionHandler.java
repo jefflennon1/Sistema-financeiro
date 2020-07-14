@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javassist.bytecode.ExceptionsAttribute;
-
 @ControllerAdvice
 public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler{
 	
@@ -83,9 +81,7 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler{
 		return erros;
 	}
 	
-	
-	
-	
+
 	public static class Erros {
 		
 		private String mensagemUsuario;
@@ -101,10 +97,7 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler{
 		public String getMensagemDesenvolvedor() {
 			return mensagemDesenvolvedor;
 		}
-		
-		
-		
-		
+			
 	}
 
 }
