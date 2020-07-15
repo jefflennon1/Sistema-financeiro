@@ -8,3 +8,7 @@ INSERT INTO categoria (nome) VALUES ('Alimentação');
 INSERT INTO categoria (nome) VALUES ('Supermercado');
 INSERT INTO categoria (nome) VALUES ('Fermácia');
 INSERT INTO categoria (nome) VALUES ('Outros');
+INSERT INTO categoria (nome) VALUES ('Gastos com restaurante');
+INSERT INTO categoria (nome) VALUES ('Gastos em shopping');
+INSERT INTO categoria (nome) VALUES ('Viagens');
+INSERT INTO categoria (nome) VALUES ('Utensílios de casa');
