@@ -11,7 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.util.StringUtils;
+
 import com.example.algamoney.api.model.Lancamento;
+import com.example.algamoney.api.model.Lancamento_;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
 
 public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
@@ -38,18 +41,21 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
 		
 		List<Predicate> predicates = new ArrayList<>();
 		
-		if(lancamentoFilter.getDataDeVencimentoDe() != null) {
+		if(!StringUtils.isEmpty(lancamentoFilter.getDescricao())) {
+			predicates.add(builder.like(
+					builder.lower(root.get(Lancamento_.descricao)), "%" + lancamentoFilter.getDescricao().toLowerCase() + "%"));
 			
 		}
-		if(lancamentoFilter.getDataDeVencimentoDe() != null) {
-			
+		if(!StringUtils.isEmpty(lancamentoFilter.getDataDeVencimentoDe())) {
+			predicates.add(builder.greaterThanOrEqualTo( 
+					root.get(Lancamento_.dataVencimento), lancamentoFilter.getDataDeVencimentoDe()));
 		}
-		
-		if(lancamentoFilter.getDataDeVencimentoAte() != null) {
-			
+		if(!StringUtils.isEmpty(lancamentoFilter.getDataDeVencimentoAte())) {
+			predicates.add(builder.lessThanOrEqualTo(
+					root.get(Lancamento_.dataVencimento), lancamentoFilter.getDataDeVencimentoAte()));
 		}
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
-}
+}	
