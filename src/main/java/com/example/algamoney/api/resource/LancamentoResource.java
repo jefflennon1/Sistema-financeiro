@@ -12,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +53,7 @@ public class LancamentoResource {
 	
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Lancamento> buscarPeloId(@PathVariable Long codigo){
-		Lancamento lancamentoSalvo = lancamentoRepository.findOne(codigo);
+		Lancamento lancamentoSalvo = lancamentoService.buscar(codigo);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(lancamentoSalvo);
 	}
@@ -66,10 +67,14 @@ public class LancamentoResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoSalvo);
 	}
 	
+	@DeleteMapping("{codigo}")
+	public ResponseEntity<Lancamento> deletar(@PathVariable Long codigo){
+		Lancamento lancamento = lancamentoService.buscar(codigo);
+		lancamentoService.deletar(lancamento);
+		return ResponseEntity.noContent().build();		
+	}
 	
-	
-	
-	
+//	Exceção para vaalidar a pessoa no cadastro de lançamento
 	
 	@ExceptionHandler({PessoaInexistenteOuInativaException.class})
 	public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex){
