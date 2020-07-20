@@ -31,7 +31,6 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
 		CriteriaQuery<Lancamento> criteria = builder.createQuery(Lancamento.class);
 		Root<Lancamento> root = criteria.from(Lancamento.class);
 	
-		//Essa parte aqui é onde vou inserir meus filtros - restrições
 		Predicate[] predicates = criarRestricoes(lancamentoFilter, builder, root);
 		criteria.where(predicates);	
 		TypedQuery<Lancamento> query = manager.createQuery(criteria);
@@ -39,9 +38,6 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
 		
 		return new PageImpl<>(query.getResultList(), pageable, total(lancamentoFilter));
 	}
-
-
-
 
 	private Predicate[] criarRestricoes(LancamentoFilter lancamentoFilter, CriteriaBuilder builder,
 			Root<Lancamento> root) {
