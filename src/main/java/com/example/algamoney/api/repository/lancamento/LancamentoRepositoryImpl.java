@@ -1,4 +1,4 @@
-package com.example.algamoney.api.repository.lancamento;
+ package com.example.algamoney.api.repository.lancamento;
 
 import java.util.ArrayList;
 import java.util.List;
