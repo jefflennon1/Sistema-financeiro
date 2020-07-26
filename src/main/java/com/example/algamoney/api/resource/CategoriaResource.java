@@ -35,11 +35,9 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService categoriaService;
 	
-	
-	
-	@GetMapping
-	public List<Categoria> listarTodos(){
 		
+	@GetMapping
+	public List<Categoria> listarTodos(){		
 		return categoriaRepository.findAll();
 	}
 	
@@ -57,8 +55,6 @@ public class CategoriaResource {
 	
 	return ResponseEntity.status(HttpStatus.CREATED).body(categoriaJaSalva);
 	}
-	
-	
 	
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody @Valid Categoria categoria){
