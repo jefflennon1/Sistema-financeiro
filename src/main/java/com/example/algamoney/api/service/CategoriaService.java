@@ -14,17 +14,23 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Categoria atualizar(Long codigo, Categoria categoria) {
-		Categoria categoriaAtt = buscarPeloCodigo(codigo);
-		return categoriaRepository.save(categoriaAtt);
-	}
-
+	
 	public Categoria buscarPeloCodigo(long codigo) {
 		Categoria categoria = categoriaRepository.findOne(codigo);
 		if(StringUtils.isEmpty(categoria)) {
 			throw new EmptyResultDataAccessException(1);
 		}
 		return categoria;
+	}
+	
+	public Categoria atualizar(Long codigo, Categoria categoria) {
+		Categoria categoriaAtt = buscarPeloCodigo(codigo);
+		return categoriaRepository.save(categoriaAtt);
+	}
+
+	public Categoria salvar(Categoria categoria) {
+		Categoria categoriaSalvar = categoriaRepository.save(categoria);
+		return categoriaSalvar;
 	}
 
 	

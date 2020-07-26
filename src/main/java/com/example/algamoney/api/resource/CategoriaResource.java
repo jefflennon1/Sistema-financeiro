@@ -43,24 +43,25 @@ public class CategoriaResource {
 		return categoriaRepository.findAll();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
-		
-	Categoria categoriaJaSalva = categoriaRepository.save(categoria);
-	
-	publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaJaSalva.getCodigo()));
-	
-	return ResponseEntity.status(HttpStatus.CREATED).body(categoriaJaSalva);
-	}
-	
 	@RequestMapping("/{codigo}")
 	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable long codigo) {
 		Categoria categoria = categoriaService.buscarPeloCodigo(codigo);		
 		return ResponseEntity.ok(categoria);
 	}
 	
+	@PostMapping
+	public ResponseEntity<Categoria> criar(@Valid @RequestBody  Categoria categoria, HttpServletResponse response) {	
+	Categoria categoriaJaSalva = categoriaService.salvar(categoria);
+	
+	publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaJaSalva.getCodigo()));
+	
+	return ResponseEntity.status(HttpStatus.CREATED).body(categoriaJaSalva);
+	}
+	
+	
+	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody @Valid Categoria categoria){
 		Categoria categoriaAtt = categoriaService.atualizar(codigo, categoria);
 		return ResponseEntity.ok(categoriaAtt);
 	}
