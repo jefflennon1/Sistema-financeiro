@@ -40,7 +40,7 @@ public class CategoriaResource {
 		
 	@GetMapping
 	public Page<Categoria> listarTodos(CategoriaFilter categoriaFilter, Pageable pageable){		
-		return categoriaRepository.filtrar(categoriaFilter,pageable);
+		return categoriaRepository.filtrar(categoriaFilter, pageable);
 	}
 	
 	@RequestMapping("/{codigo}")
