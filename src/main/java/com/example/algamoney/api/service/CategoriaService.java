@@ -33,5 +33,10 @@ public class CategoriaService {
 		return categoriaSalvar;
 	}
 
+	public void deletar(Long codigo) {
+		
+		
+	}
+
 	
 }

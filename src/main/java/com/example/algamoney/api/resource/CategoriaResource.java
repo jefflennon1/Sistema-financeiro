@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,12 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody @Valid Categoria categoria){
 		Categoria categoriaAtt = categoriaService.atualizar(codigo, categoria);
 		return ResponseEntity.ok(categoriaAtt);
+	}
+	
+	@DeleteMapping("{codigo}")
+	public ResponseEntity<Categoria> deletar(@PathVariable Long codigo){
+		categoriaService.deletar(codigo);
+		return ResponseEntity.noContent().build();
 	}
 	
 }
