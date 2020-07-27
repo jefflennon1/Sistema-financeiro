@@ -34,8 +34,8 @@ public class CategoriaService {
 	}
 
 	public void deletar(Long codigo) {
-		
-		
+		Categoria categoria = buscarPeloCodigo(codigo);
+		categoriaRepository.delete(categoria);
 	}
 
 	
