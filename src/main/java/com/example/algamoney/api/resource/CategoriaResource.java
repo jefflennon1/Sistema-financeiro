@@ -1,7 +1,5 @@
 package com.example.algamoney.api.resource;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -38,8 +36,7 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService categoriaService;
-	
-	
+		
 		
 	@GetMapping
 	public Page<Categoria> listarTodos(CategoriaFilter categoriaFilter, Pageable pageable){		
