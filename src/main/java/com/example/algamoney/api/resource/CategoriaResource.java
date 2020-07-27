@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,10 +38,11 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService categoriaService;
 	
+	
 		
 	@GetMapping
-	public List<Categoria> listarTodos(){		
-		return categoriaRepository.findAll();
+	public Page<Categoria> listarTodos(Pageable pageable){		
+		return categoriaRepository.filtrar(pageable);
 	}
 	
 	@RequestMapping("/{codigo}")
