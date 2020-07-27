@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.model.Categoria;
 import com.example.algamoney.api.repository.CategoriaRepository;
+import com.example.algamoney.api.repository.filter.CategoriaFilter;
 import com.example.algamoney.api.service.CategoriaService;
 
 @RestController
@@ -41,8 +42,8 @@ public class CategoriaResource {
 	
 		
 	@GetMapping
-	public Page<Categoria> listarTodos(Pageable pageable){		
-		return categoriaRepository.filtrar(pageable);
+	public Page<Categoria> listarTodos(CategoriaFilter categoriaFilter, Pageable pageable){		
+		return categoriaRepository.filtrar(categoriaFilter,pageable);
 	}
 	
 	@RequestMapping("/{codigo}")
