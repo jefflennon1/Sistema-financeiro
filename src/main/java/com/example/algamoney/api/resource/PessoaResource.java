@@ -44,12 +44,11 @@ public class PessoaResource {
 		return pessoaRepository.findAll();
 	}
 
-	
-	@PutMapping("/{codigo}/endereco")
-	public ResponseEntity<Pessoa> atualizaEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco){
-		Pessoa pessoa = pessoaService.atualizarEndeco(codigo, endereco);
-		return ResponseEntity.ok(pessoa);
-	}	
+	@RequestMapping("/{codigo}")
+	public ResponseEntity<Pessoa> trazerPeloCodigo(@PathVariable Long codigo){
+		Pessoa pessoaCodigo = pessoaService.buscarPeloCodigo(codigo);	
+		return ResponseEntity.ok(pessoaCodigo);
+	}
 	
 	@PostMapping
 	public ResponseEntity<Pessoa> salvar(@RequestBody @Valid Pessoa pessoa, HttpServletResponse response){
@@ -58,34 +57,29 @@ public class PessoaResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaCriada);
 	}
 	
-	
-	@DeleteMapping("/{codigo}")
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void remover(@PathVariable Long codigo) {
-		pessoaRepository.delete(codigo); 
-	}
+	@PutMapping("/{codigo}/endereco")
+	public ResponseEntity<Pessoa> atualizaEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco){
+		Pessoa pessoa = pessoaService.atualizarEndeco(codigo, endereco);
+		return ResponseEntity.ok(pessoa);
+	}	
 	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @RequestBody @Valid Pessoa pessoa){
-		
-		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
-		
+	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @RequestBody @Valid Pessoa pessoa){		
+		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);	
 		return ResponseEntity.ok(pessoaSalva);
 	}
 	
 	
 	@PutMapping("/{codigo}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void atualizaAtivo(@PathVariable Long codigo,@RequestBody Boolean ativo) {
-		
+	public void atualizaAtivo(@PathVariable Long codigo,@RequestBody Boolean ativo) {	
 		pessoaService.atualizaPropriedadeAtivo(codigo, ativo); 
 	}
 	
-	
-	@RequestMapping("/{codigo}")
-	public ResponseEntity<Pessoa> trazerPeloCodigo(@PathVariable Long codigo){
-		Pessoa pessoaCodigo = pessoaService.buscarPeloCodigo(codigo);	
-		return ResponseEntity.ok(pessoaCodigo);
+	@DeleteMapping("/{codigo}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long codigo) {
+		pessoaRepository.delete(codigo); 
 	}
 	
 }
