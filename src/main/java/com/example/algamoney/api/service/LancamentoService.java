@@ -27,33 +27,26 @@ public class LancamentoService {
 		if(pessoa == null || pessoa.isInativo()  ) {
 			throw new PessoaInexistenteOuInativaException();
 		}
-		
-		
+	
 		return lancamentoRepository.save(lancamento);
 	}
-
-
 
 	public Lancamento buscar(Long codigo) {
 		Lancamento lancamento = lancamentoRepository.findOne(codigo);
 		if(StringUtils.isEmpty(lancamento)) {
 			throw new EmptyResultDataAccessException(1);
-		}
-		
+		}		
 		return lancamento;
 	}
 
-
-
 	public void deletar(Lancamento lancamento) {
-		lancamentoRepository.delete(lancamento);
-		
+		lancamentoRepository.delete(lancamento);		
 	}
 
-	
-	
-	
-	
-	
+	public Lancamento atualizar(Long codigo, Lancamento lancamento) {
+		Lancamento lanc = buscar(codigo);
+		lanc = lancamentoRepository.save(lancamento);
+		return lanc;
+	}	
 
 }

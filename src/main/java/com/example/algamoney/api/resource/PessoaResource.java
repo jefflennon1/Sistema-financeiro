@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.algamoney.api.event.RecursoCriadoEvent;
+import com.example.algamoney.api.model.Endereco;
 import com.example.algamoney.api.model.Pessoa;
 import com.example.algamoney.api.repository.PessoaRepository;
 import com.example.algamoney.api.service.PessoaService;
@@ -35,12 +36,18 @@ public class PessoaResource {
 	private ApplicationEventPublisher publisher;
 	
 	@Autowired
-	private PessoaService pessoaservice;
+	private PessoaService pessoaService;
 	
 	
 	@GetMapping
 	public List<Pessoa> trazerTodos(){
 		return pessoaRepository.findAll();
+	}
+	
+	@PutMapping("/{codigo}/endereco")
+	public ResponseEntity<Pessoa> buscarEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco){
+		Pessoa pessoa = pessoaService.buscarEndeco(codigo,endereco);
+		return ResponseEntity.ok(pessoa);
 	}
 	
 	
@@ -63,7 +70,7 @@ public class PessoaResource {
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @RequestBody @Valid Pessoa pessoa){
 		
-		Pessoa pessoaSalva = pessoaservice.atualizar(codigo, pessoa);
+		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
 		
 		return ResponseEntity.ok(pessoaSalva);
 	}
@@ -73,13 +80,13 @@ public class PessoaResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizaAtivo(@PathVariable Long codigo,@RequestBody Boolean ativo) {
 		
-		pessoaservice.atualizaPropriedadeAtivo(codigo, ativo); 
+		pessoaService.atualizaPropriedadeAtivo(codigo, ativo); 
 	}
 	
 	
 	@RequestMapping("/{codigo}")
 	public ResponseEntity<Pessoa> trazerPeloCodigo(@PathVariable Long codigo){
-		Pessoa pessoaCodigo = pessoaservice.buscarPeloCodigo(codigo);	
+		Pessoa pessoaCodigo = pessoaService.buscarPeloCodigo(codigo);	
 		return ResponseEntity.ok(pessoaCodigo);
 	}
 	

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,8 +59,7 @@ public class LancamentoResource {
 		Lancamento lancamentoSalvo = lancamentoService.buscar(codigo);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(lancamentoSalvo);
-	}
-	
+	}	
 	
 	@PostMapping
 	public ResponseEntity<Lancamento> novo(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
@@ -67,6 +67,12 @@ public class LancamentoResource {
 		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoSalvo);
+	}
+	
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @RequestBody @Valid Lancamento lancamento){
+		Lancamento lancamentoAtualiza = lancamentoService.atualizar(codigo,lancamento);
+		return ResponseEntity.ok(lancamentoAtualiza);
 	}
 	
 	@DeleteMapping("{codigo}")
