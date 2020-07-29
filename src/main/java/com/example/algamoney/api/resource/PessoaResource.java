@@ -79,7 +79,7 @@ public class PessoaResource {
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long codigo) {
-		pessoaRepository.delete(codigo); 
+		pessoaService.deletar(codigo); 
 	}
 	
 }

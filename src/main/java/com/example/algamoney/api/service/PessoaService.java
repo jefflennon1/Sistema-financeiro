@@ -51,6 +51,12 @@ public class PessoaService {
 		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
 		return pessoaSalva;
 	}
+
+
+	public void deletar(Long codigo) {
+		Pessoa pessoa = buscarPeloCodigo(codigo);
+		pessoaRepository.delete(pessoa);
+	}
 	
 	
 }
