@@ -40,10 +40,16 @@ public class PessoaService {
 		pessoaRepository.save(pessoaSalva);
 	}
 
-	public Pessoa buscarEndeco(Long codigo, Endereco endereco) {
+	public Pessoa atualizarEndeco(Long codigo, Endereco endereco) {
 		Pessoa pessoa = buscarPeloCodigo(codigo);
 		pessoa.setEndereco(endereco);
 		return pessoaRepository.save(pessoa);
+	}
+
+
+	public Pessoa salvar(Pessoa pessoa) {
+		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+		return pessoaSalva;
 	}
 	
 	

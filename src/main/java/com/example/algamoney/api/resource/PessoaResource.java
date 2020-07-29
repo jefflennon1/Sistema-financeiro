@@ -43,20 +43,18 @@ public class PessoaResource {
 	public List<Pessoa> trazerTodos(){
 		return pessoaRepository.findAll();
 	}
+
 	
 	@PutMapping("/{codigo}/endereco")
-	public ResponseEntity<Pessoa> buscarEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco){
-		Pessoa pessoa = pessoaService.buscarEndeco(codigo,endereco);
+	public ResponseEntity<Pessoa> atualizaEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco){
+		Pessoa pessoa = pessoaService.atualizarEndeco(codigo, endereco);
 		return ResponseEntity.ok(pessoa);
-	}
-	
+	}	
 	
 	@PostMapping
 	public ResponseEntity<Pessoa> salvar(@RequestBody @Valid Pessoa pessoa, HttpServletResponse response){
-		 Pessoa pessoaCriada = pessoaRepository.save(pessoa);
-		
-		 publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaCriada.getCodigo()));
-		 
+		 Pessoa pessoaCriada = pessoaService.salvar(pessoa);		
+		 publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaCriada.getCodigo()));		 
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaCriada);
 	}
 	
