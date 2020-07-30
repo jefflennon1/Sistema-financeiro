@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 @EnableWebSecurity
 @Configuration
@@ -16,7 +17,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	
 	@Autowired
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ROLE");
 		
 	}
@@ -28,9 +29,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers("/categorias").permitAll()
 		.anyRequest().authenticated()
 		.and()
-		.httpBasic()
-		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.csrf().disable();
+	}
+	
+	@Override
+	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+		resources.stateless(true);
 	}
 }
