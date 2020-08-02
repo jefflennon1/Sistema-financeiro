@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -38,7 +39,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	}
 
 	@Bean
-	public AccessTokenConverter accessTokenConverter() {
+	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
 		accessTokenConverter.setSigningKey("algaworks");
 		return accessTokenConverter;
@@ -46,6 +47,6 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 
 	@Bean
 	public TokenStore tockenStore() {
-		return new InMemoryTokenStore();
+		return new JwtTokenStore(accessTokenConverter());
 	}
 }
