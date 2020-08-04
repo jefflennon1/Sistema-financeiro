@@ -32,8 +32,10 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tockenStore())
+		endpoints
+		.tokenStore(tockenStore())
 		.accessTokenConverter(accessTokenConverter())
+		.reuseRefreshTokens(false)
 		.authenticationManager(authenticationManager);
 	}
 
