@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.exceptionhandler.AlgamoneyExceptionHandler.Erros;
 import com.example.algamoney.api.model.Lancamento;
-import com.example.algamoney.api.repository.LancamentoRepository;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
 import com.example.algamoney.api.service.LancamentoService;
 import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
@@ -36,8 +35,6 @@ import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaExc
 @RequestMapping("/lancamentos")
 public class LancamentoResource {
 
-	@Autowired
-	private LancamentoRepository lancamentoRepository;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
