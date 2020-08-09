@@ -21,7 +21,7 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 
 	@Override
 	public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-		return returnType.getMethod().equals("postAccessToken");
+		return returnType.getMethod().getName().equals("postAccessToken");
 	}
 
 	@Override
@@ -32,14 +32,14 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 		HttpServletRequest req = ((ServletServerHttpRequest)request).getServletRequest();
 		HttpServletResponse resp = ((ServletServerHttpResponse)response).getServletResponse();
 		
-		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken)body;
+		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 		
 		String refreshToken = body.getRefreshToken().getValue();
 		adicionarRefreshTokenNoCookie(refreshToken, req, resp);
 
 		removerRefreshTokenDoBody(token);
 		
-		return null;
+		return body;
 	}
 
 	private void removerRefreshTokenDoBody(DefaultOAuth2AccessToken token) {
@@ -51,7 +51,7 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 		Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
 		refreshTokenCookie.setHttpOnly(true);
 		refreshTokenCookie.setSecure(false); // TODO: Mudar para true e produção
-		refreshTokenCookie.setPath(req.getContentType() + "oauth/token");
+		refreshTokenCookie.setPath(req.getContentType() + "/oauth/token");
 		refreshTokenCookie.setMaxAge(2592000);  //trinta dias para expirar
 		resp.addCookie(refreshTokenCookie);
 		
