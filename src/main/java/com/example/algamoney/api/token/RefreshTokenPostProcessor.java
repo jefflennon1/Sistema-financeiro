@@ -1,5 +1,6 @@
 package com.example.algamoney.api.token;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +38,12 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 	}
 
 	private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+		Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+		refreshTokenCookie.setHttpOnly(true);
+		refreshTokenCookie.setSecure(false); // TODO: Mudar para true e produção
+		refreshTokenCookie.setPath(req.getContentType() + "oauth/token");
+		refreshTokenCookie.setMaxAge(2592000);  //trinta dias para expirar
+		resp.addCookie(refreshTokenCookie);
 		
 	}
 
