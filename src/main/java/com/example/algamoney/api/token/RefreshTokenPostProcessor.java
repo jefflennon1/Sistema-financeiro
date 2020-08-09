@@ -1,10 +1,13 @@
 package com.example.algamoney.api.token;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
@@ -21,8 +24,18 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 	public OAuth2AccessToken beforeBodyWrite(OAuth2AccessToken body, MethodParameter returnType,
 			MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			ServerHttpRequest request, ServerHttpResponse response) {
-		// TODO Auto-generated method stub
+		
+		HttpServletRequest req = ((ServletServerHttpRequest)request).getServletRequest();
+		
+		String refreshToken = body.getRefreshToken().getValue();
+		adicionarRefreshTokenNoCookie(refreshToken);
+
 		return null;
+	}
+
+	private void adicionarRefreshTokenNoCookie(String refreshToken) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
