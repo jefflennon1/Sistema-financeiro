@@ -31,12 +31,12 @@ public class RefreshTokenPostProcessor  implements ResponseBodyAdvice<OAuth2Acce
 		HttpServletResponse resp = ((ServletServerHttpResponse)response).getServletResponse();
 		
 		String refreshToken = body.getRefreshToken().getValue();
-		adicionarRefreshTokenNoCookie(refreshToken);
+		adicionarRefreshTokenNoCookie(refreshToken, req, resp);
 
 		return null;
 	}
 
-	private void adicionarRefreshTokenNoCookie(String refreshToken) {
+	private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		
 	}
