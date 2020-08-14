@@ -33,7 +33,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints
-		.tokenStore(tockenStore())
+		.tokenStore(tokenStore())
 		.accessTokenConverter(accessTokenConverter())
 		.reuseRefreshTokens(false)
 		.authenticationManager(authenticationManager);
@@ -47,7 +47,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	}
 
 	@Bean
-	public TokenStore tockenStore() {
+	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
 }
